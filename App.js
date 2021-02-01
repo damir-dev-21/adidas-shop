@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {Provider} from 'react-redux'
 import { View,Text, StyleSheet } from 'react-native'
 import {NavigationContainer} from '@react-navigation/native'
 import {createDrawerNavigator} from '@react-navigation/drawer'
@@ -6,6 +7,8 @@ import MainTabs from './src/navigation'
 
 import AppLoading from 'expo-app-loading'
 import {AsyncLoad} from './src/AsyncLoad'
+import { DrawerContent } from './src/screens/DrawerContent'
+import reducers from './src/store/index'
 
 const Drawer = createDrawerNavigator()
 
@@ -24,11 +27,14 @@ export default App = () =>{
     }
   
     return(
-      <NavigationContainer>
-          <Drawer.Navigator>
-                <Drawer.Screen name="HomeDrawer" component={MainTabs}/>
-          </Drawer.Navigator>
-      </NavigationContainer>
+        <Provider store={reducers}>
+        <NavigationContainer>
+            <Drawer.Navigator drawerContent={props=><DrawerContent {...props}/>}>
+                  <Drawer.Screen name="HomeDrawer" component={MainTabs}/>
+            </Drawer.Navigator>
+        </NavigationContainer>
+        </Provider>
+      
   )
 }
 

@@ -1,9 +1,23 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 import {View,Text,StatusBar, StyleSheet, ImageBackground,ScrollView, TouchableOpacity,Dimensions, Image} from 'react-native'
+import { fakeData } from '../constants'
 
-export const HomeScreen = () =>{
+export const HomeScreen = ({navigation}) =>{
 
     const {width,height} = Dimensions.get('screen')
+
+    const [data,setData] = useState([])
+
+    let mens,womans,childs;
+
+    useEffect(()=>{
+        setData(fakeData)
+    },[data])
+
+    mens = data.filter(item=>item.category === 0)
+    womans = data.filter(item=>item.category === 1)
+    childs = data.filter(item=>item.category === 2)
+
 
     return(
         <View style={styles.container}>
@@ -14,7 +28,10 @@ export const HomeScreen = () =>{
                         <Text style={{fontFamily:'Imperial',color: '#012e4c',fontSize:28}}>Men's Shoes</Text>
                         <Text style={{fontFamily:'Roboto',fontSize:15,color:'#000'}}>Spring’s New Arrival</Text>
                         <Text style={{fontSize:22,color:'#012e4c',fontFamily:'Roboto',marginTop:5}}>Collection</Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=>navigation.navigate('Category',{
+                            name:'Мужская',
+                            data:mens
+                        })}>
                             <View style={{marginTop:20,backgroundColor: '#01dad7',width:100,padding:8,borderRadius:50}}>
                                 <Text style={{textAlign:'center',color:'#f7f7f7',fontSize:16}}>Shop Now</Text>
                             </View>
@@ -60,7 +77,10 @@ export const HomeScreen = () =>{
                     <View style={{flexDirection:'column',justifyContent:'center',alignItems:'flex-end',marginTop:20,marginRight:10}}>
                         <Text style={{fontFamily:'Imperial',color: '#012e4c',fontSize:28}}>WomenBoots</Text>
                         <Text style={{fontSize:15,color:'#000'}}>Spring’s New Arrival</Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=>navigation.navigate('Category',{
+                            name:'Женская',
+                            data:womans
+                        })}>
                             <View style={{marginTop:15,backgroundColor: '#01dad7',width:100,padding:8,borderRadius:50}}>
                                 <Text style={{textAlign:'center',color:'#f7f7f7',fontSize:16}}>Shop Now</Text>
                             </View>
@@ -73,7 +93,10 @@ export const HomeScreen = () =>{
                     <View style={{flexDirection:'column',justifyContent:'center',marginTop:30,marginLeft:10}}>
                         <Text style={{fontFamily:'Imperial',color: '#012e4c',fontSize:28}}>Kids Fashion</Text>
                         <Text style={{fontSize:15,color:'#000'}}>Spring’s New Arrival</Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=>navigation.navigate('Category',{
+                            name:'Детская',
+                            data:childs
+                        })}>
                             <View style={{marginTop:20,backgroundColor: '#01dad7',width:100,padding:8,borderRadius:50}}>
                                 <Text style={{textAlign:'center',color:'#f7f7f7',fontSize:15}}>Shop Now</Text>
                             </View>
